@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# Husky + ESLint + lint-staged
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto de estudo sobre **Git Hooks** e automação de validações no fluxo de commits.
 
-Currently, two official plugins are available:
+## Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- ESLint
+- Husky
+- lint-staged
+- Git
+- Node.js
 
-## React Compiler
+## Fluxo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```text
+git add
+   ↓
+arquivos staged
+   ↓
+git commit
+   ↓
+Husky (pre-commit)
+   ↓
+lint-staged
+   ↓
+ESLint
+   ↓
+Commit permitido ou bloqueado
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Instalação
 
-```js
-import reactDom from "eslint-plugin-react-dom";
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm install
 ```
+
+Inicialize o Husky:
+
+```bash
+npx husky init
+```
+
+## Teste
+
+Adicione os arquivos ao staging:
+
+```bash
+git add .
+```
+
+Faça o commit:
+
+```bash
+git commit -m "feat: primeiro commit"
+```
+
+O Husky executará o `lint-staged`, que aplicará o ESLint somente nos arquivos staged.
+
+## Estrutura
+
+```text
+├── .husky/
+│   └── pre-commit
+├── src/
+├── eslint.config.js
+├── package.json
+└── package-lock.json
+```
+
+## Objetivo
+
+Demonstrar a integração entre **ESLint, lint-staged e Husky** para automatizar a validação do código antes dos commits.
